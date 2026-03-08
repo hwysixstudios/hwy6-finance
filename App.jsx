@@ -563,7 +563,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap');
         *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
         html,body,#root{height:100%;overscroll-behavior:none}
-        body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);background:` + C.bg + `}
+        body{background:` + C.bg + `}
         ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:` + C.scrollbarTrack + `}::-webkit-scrollbar-thumb{background:` + C.scrollbar + `}
         .tr:hover{background:` + C.rowHover + `}
         .del:hover{color:#f87171!important}
