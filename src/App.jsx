@@ -63,13 +63,13 @@ const EF = ({ value, onSave, type = "text", options, style = {} }) => {
   const commit = () => { setEditing(false); if (String(val) !== String(value)) onSave(type === "number" ? parseFloat(val) || 0 : val); };
   if (editing) {
     if (options) return (
-      <select value={val} onChange={e => { setVal(e.target.value); onSave(e.target.value); setEditing(false); }}
+      <select autoFocus value={val} onChange={e => { setVal(e.target.value); onSave(e.target.value); setEditing(false); }}
         onBlur={() => setEditing(false)}
         style={{ background: "#111", border: "1px solid #444", color: "#fff", fontFamily: "'DM Mono',monospace", fontSize: 11, padding: "2px 6px", borderRadius: 3, ...style }}>
         {options.map(o => <option key={o}>{o}</option>)}
       </select>
     );
-    return <input value={val} type={type === "number" ? "number" : "text"}
+    return <input autoFocus value={val} type={type === "number" ? "number" : "text"}
       onChange={e => setVal(e.target.value)}
       onBlur={commit} onKeyDown={e => e.key === "Enter" && commit()}
       style={{ background: "#111", border: "1px solid #444", color: "#fff", fontFamily: "'DM Mono',monospace", fontSize: 11, padding: "2px 6px", borderRadius: 3, width: "100%", ...style }} />;
@@ -144,11 +144,11 @@ const Tag = ({ children, color }) => {
 };
 
 const Inp = ({ style, ...p }) => (
-  <input style={{ background: "#111", border: "1px solid #252525", color: "#fff", padding: "12px 14px", borderRadius: 4, fontFamily: "'DM Mono',monospace", fontSize: 16, outline: "none", width: "100%", boxSizing: "border-box", WebkitAppearance: "none", ...style }} {...p} />
+  <input style={{ background: "#111", border: "1px solid #252525", color: "#fff", padding: "8px 12px", borderRadius: 4, fontFamily: "'DM Mono',monospace", fontSize: 12, outline: "none", width: "100%", boxSizing: "border-box", ...style }} {...p} />
 );
 
 const Sel = ({ style, children, ...p }) => (
-  <select style={{ background: "#111", border: "1px solid #252525", color: "#fff", padding: "12px 14px", borderRadius: 4, fontFamily: "'DM Mono',monospace", fontSize: 16, outline: "none", width: "100%", boxSizing: "border-box", WebkitAppearance: "none", cursor: "pointer", ...style }} {...p}>{children}</select>
+  <select style={{ background: "#111", border: "1px solid #252525", color: "#fff", padding: "8px 12px", borderRadius: 4, fontFamily: "'DM Mono',monospace", fontSize: 12, outline: "none", width: "100%", boxSizing: "border-box", cursor: "pointer", ...style }} {...p}>{children}</select>
 );
 
 const TH = ({ children }) => <span style={{ fontSize: 9, color: "#3a3a3a", letterSpacing: "0.2em", textTransform: "uppercase" }}>{children}</span>;
@@ -1049,7 +1049,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
                         <span style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 16, color: "#555" }}>{c.name[0]}</span>
                       </div>
                       <div>
-                        <div style={{ fontSize: 16, color: "#ddd", marginBottom: 2 }}><EF value={c.name} onSave={v => updateContractor(c.id, "name", v)} style={{ fontSize: 16, color: "#ddd" }} /></div>
+                        <div style={{ fontSize: 13, color: "#ddd", marginBottom: 2 }}><EF value={c.name} onSave={v => updateContractor(c.id, "name", v)} style={{ fontSize: 13, color: "#ddd" }} /></div>
                         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                           <EF value={c.role || ""} onSave={v => updateContractor(c.id, "role", v)} style={{ fontSize: 10, color: "#666" }} />
                           <EF value={c.handle || ""} onSave={v => updateContractor(c.id, "handle", v)} style={{ fontSize: 10, color: "#333" }} />
