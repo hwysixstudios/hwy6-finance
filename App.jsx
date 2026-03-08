@@ -152,9 +152,9 @@ const Sel = ({ c = { input: "#111", inputBorder: "#252525", text: "#fff" }, styl
   <select style={{ background: c.input, border: `1px solid ${c.inputBorder}`, color: c.text, padding: "14px 16px", borderRadius: 6, fontFamily: "'DM Mono',monospace", fontSize: 16, outline: "none", width: "100%", boxSizing: "border-box", WebkitAppearance: "none", cursor: "pointer", ...style }} {...p}>{children}</select>
 );
 
-const TH = ({ children }) => <span style={{ fontSize: 9, color: C.label, letterSpacing: "0.2em", textTransform: "uppercase" }}>{children}</span>;
+const TH = ({ children, c }) => <span style={{ fontSize: 9, color: c ? c.label : "#3a3a3a", letterSpacing: "0.2em", textTransform: "uppercase" }}>{children}</span>;
 
-const LABEL = ({ children }) => <span style={{ fontSize: 9, color: C.label, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 10, display: "block" }}>{children}</span>;
+const LABEL = ({ children, c }) => <span style={{ fontSize: 9, color: c ? c.label : "#3a3a3a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 10, display: "block" }}>{children}</span>;
 
 const emptyC = { client: "", amount: "", jobType: "", month: CUR_MONTH, type: "retainer", status: "unpaid" };
 const emptySub = { name: "", category: "Software / SaaS", amount: "", billing: "monthly" };
@@ -611,7 +611,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
               { label: "Pending", val: fmt(clientUnpaid), color: "#fbbf24", sub: "unpaid invoices" },
             ].map((m, i) => (
               <div key={i} className="mc" style={CARD}>
-                <LABEL>{m.label}</LABEL>
+                <LABEL c={C}>{m.label}</LABEL>
                 <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 34, color: m.color, lineHeight: 1, marginBottom: 4 }}>{m.val}</div>
                 <div style={{ fontSize: 9, color: C.label, letterSpacing: "0.1em" }}>{m.sub}</div>
               </div>
@@ -621,12 +621,12 @@ create policy "allow all" on config for all using (true) with check (true);`;
           {/* Tax card */}
           <div className="mc" style={{ ...CARD, marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
             <div>
-              <LABEL>Tax Reserve ({Math.round(taxRate * 100)}%)</LABEL>
+              <LABEL c={C}>Tax Reserve ({Math.round(taxRate * 100)}%)</LABEL>
               <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 32, color: "#fb923c" }}>{fmt(taxOwed)}</div>
               <div style={{ fontSize: 9, color: C.label, marginTop: 2 }}>set aside from revenue</div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <LABEL>Take-Home</LABEL>
+              <LABEL c={C}>Take-Home</LABEL>
               <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 32, color: takeHome >= 0 ? "#4ade80" : "#f87171" }}>{fmt(takeHome)}</div>
               {editTax ? (
                 <div style={{ display: "flex", gap: 6, marginTop: 8, justifyContent: "flex-end", alignItems: "center" }}>
@@ -650,7 +650,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
               <div className="mc" style={{ ...CARD, marginBottom: 24 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
                   <div>
-                    <LABEL>Monthly Target</LABEL>
+                    <LABEL c={C}>Monthly Target</LABEL>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 32, color: over ? "#4ade80" : "#fff" }}>{fmt(totalRevenue)}</span>
                       <span style={{ fontSize: 11, color: "#333" }}>/ {fmt(incomeTarget)}</span>
@@ -692,7 +692,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
               const pct = totalRevenue > 0 ? Math.round((r.amt / totalRevenue) * 100) : 0;
               return (
                 <div key={i} className="mc" style={CARD}>
-                  <LABEL>{r.label}</LABEL>
+                  <LABEL c={C}>{r.label}</LABEL>
                   <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 28, color: r.color }}>{fmt(r.amt)}</div>
                   <div style={{ height: 2, background: "#1a1a1a", marginTop: 12, borderRadius: 2 }}>
                     <div style={{ width: `${pct}%`, height: "100%", background: r.color, borderRadius: 2 }} />
@@ -728,7 +728,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
 
           {showCF && (
             <div style={FORM}>
-              <LABEL>New Entry</LABEL>
+              <LABEL c={C}>New Entry</LABEL>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
                 <Inp c={C} placeholder="Client name" value={nc.client} onChange={e => setNc(v => ({ ...v, client: e.target.value }))} />
                 <Inp c={C} placeholder="Amount ($)" type="number" value={nc.amount} onChange={e => setNc(v => ({ ...v, amount: e.target.value }))} />
@@ -779,12 +779,12 @@ create policy "allow all" on config for all using (true) with check (true);`;
         {tab === "merch" && (<>
           {/* Products table */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-            <LABEL>Products</LABEL>
+            <LABEL c={C}>Products</LABEL>
             <button style={ADDBTN} onClick={() => setShowPF(v => !v)}>+ Add Product</button>
           </div>
           {showPF && (
             <div style={FORM}>
-              <LABEL>New Product</LABEL>
+              <LABEL c={C}>New Product</LABEL>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
                 <Inp c={C} placeholder="Product name" value={np.name} onChange={e => setNp(v => ({ ...v, name: e.target.value }))} />
                 <Inp c={C} placeholder="Price ($)" type="number" value={np.price} onChange={e => setNp(v => ({ ...v, price: e.target.value }))} />
@@ -813,12 +813,12 @@ create policy "allow all" on config for all using (true) with check (true);`;
 
           {/* Sales log */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-            <LABEL>Sales Log</LABEL>
+            <LABEL c={C}>Sales Log</LABEL>
             <button style={ADDBTN} onClick={() => setShowSlF(v => !v)}>+ Log Sale</button>
           </div>
           {showSlF && (
             <div style={FORM}>
-              <LABEL>New Sale</LABEL>
+              <LABEL c={C}>New Sale</LABEL>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
                 <Sel c={C} value={nsl.productId} onChange={e => setNsl(v => ({ ...v, productId: e.target.value }))}>
                   <option value="">Select product</option>
@@ -869,7 +869,7 @@ create policy "allow all" on config for all using (true) with check (true);`;
           </div>
           {showSF && (
             <div style={FORM}>
-              <LABEL>New Subscription</LABEL>
+              <LABEL c={C}>New Subscription</LABEL>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
                 <Inp c={C} placeholder="Name" value={ns.name} onChange={e => setNs(v => ({ ...v, name: e.target.value }))} />
                 <Inp c={C} placeholder="Amount ($/mo)" type="number" value={ns.amount} onChange={e => setNs(v => ({ ...v, amount: e.target.value }))} />
